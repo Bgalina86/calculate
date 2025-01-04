@@ -15,8 +15,10 @@ package com.example;
  * На самом деле в зависимости от способа реализации может покрывать как больше аспектов, так и меньше) Все зависит от выбранного способа решения.
  */
 
-import enumClass.ValidationResult;
+import static com.example.constClass.Alphabet.alphabet;
 
+import com.example.enumClass.TokenType;
+import com.example.enumClass.ValidationResult;
 import java.util.ArrayList;
 
 class Calculate {
@@ -64,12 +66,6 @@ class Calculate {
         return tokens.toArray(new String[0]);
     }
 
-    //public enum ValidationResult {OK, InvalidCharDetected, UnexpectedTokenCount, InvalidGrammar}
-
-    ;
-
-    private final String alphabet = "0123456789+-/* ";
-
     /*
     private String supressSpaces(final String org)
     {
@@ -99,7 +95,6 @@ class Calculate {
         return true;
     }
 
-    private enum TokenType {Number, OperationSign, InvalidToken};
 
     private TokenType classifyToken(final  String token)
     {
