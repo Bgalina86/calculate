@@ -1,4 +1,5 @@
 package com.example.enumClass;
 
-public enum TokenType {Number, OperationSign, InvalidToken
+public enum TokenType {
+    Number, OperationSign, InvalidToken
 }
