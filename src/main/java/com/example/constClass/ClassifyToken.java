@@ -3,22 +3,21 @@ package com.example.constClass;
 import com.example.enumClass.TokenType;
 import com.example.validation.Validation;
 
-public class ClassifyToken {
+public interface ClassifyToken {
 
-    public static TokenType classifyToken(final String token)
+ static TokenType classifyToken(final String token)
     {
-
-        if(token.isEmpty())
+        if(token.isEmpty()||Helper.ALPHABET_OF_LETTERS()||Helper.ALPHABET_OF_SPECIAL_CHARACTERS()) {
             return TokenType.InvalidToken;
+        }
 
         char sym = token.charAt(0);
-
-        if(Character.isDigit(sym))
+        if(Character.isDigit(sym)) {
             return TokenType.Number;
-
-        if(Validation.isOperationSign(sym))
-            return TokenType.OperationSign;
-        else
-            return TokenType.InvalidToken;
+        }
+        if(Validation.isOperationSign(sym)){
+            return TokenType.OperationSign;}
+        else{
+            return TokenType.InvalidToken;}
     }
 }

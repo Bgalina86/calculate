@@ -40,13 +40,13 @@ class Calculate extends Validation {
         System.out.println("=== Running test suite ====\n");
 
         assure( validateLine("123 + 345") == ValidationResult.OK, "Normal line" );
-        assure (validateLine("A123+334") == ValidationResult.InvalidCharDetected, "Invalid character detection");
-        assure (validateLine("123 + ") == ValidationResult.UnexpectedTokenCount, "Wrong token count detection");
-        assure( validateLine("123 1234  +") == ValidationResult.InvalidGrammar, "Incorrect token seq. detection");
-        assure( validateLine("/123@1234 ") == ValidationResult.InvalidGrammar, "Incorrect token seq. detection");
+        assure (validateLine("A123+334") == ValidationResult.Error_InvalidCharDetected, "Invalid character detection");
+        assure (validateLine("123 + ") == ValidationResult.Error_UnexpectedTokenCount, "Wrong token count detection");
+        assure( validateLine("123 1234  +") == ValidationResult.Error_InvalidGrammar, "Incorrect token seq. detection");
+        assure( validateLine("/123@1234 ") == ValidationResult.Error_InvalidGrammar, "Incorrect token seq. detection");
         assure( validateLine("123/1234 ") == ValidationResult.OK, "Normal line");
         assure( validateLine("123*1234 ") == ValidationResult.OK, "Normal line");
-        assure( validateLine("12c31234 ") == ValidationResult.InvalidGrammar, "Incorrect token seq. detection");
+        assure( validateLine("12c31234 ") == ValidationResult.Error_InvalidGrammar, "Incorrect token seq. detection");
         /*
         assure(true, "Always succeeded");
         assure( validAlphaTest(), "Check line having correct alphabet" );
