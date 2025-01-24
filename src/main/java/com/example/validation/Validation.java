@@ -3,6 +3,7 @@ package com.example.validation;
 import com.example.constClass.ClassifyToken;
 import com.example.enumClass.TokenType;
 import com.example.enumClass.ValidationResult;
+import java.util.regex.Pattern;
 
 import static com.example.constClass.Helper.ALPHABET_OF_LETTERS;
 import static com.example.constClass.Helper.ALPHABET_OF_MATH_OPERATIONS;
@@ -73,8 +74,17 @@ public class Validation extends Parser{
         return true;
     }
 
-    //Error_StringStartWith
-    // проверка регулярным выражением
+    private boolean hasNotOperationsNext(String line){
+      for (int i = 0; i < line.length(); i++){
+          for ( int j = 0; j < ALPHABET_OF_MATH_OPERATIONS.length(); j++){
+            String  alphabetMathOperations = String.valueOf(ALPHABET_OF_MATH_OPERATIONS.charAt(j));
+              if (line.startsWith(alphabetMathOperations)){
+                  return false;
+              }
+          }
+      }
+      return true;
+    }
 
     public ValidationResult validateLine(String line)
     {
@@ -84,14 +94,20 @@ public class Validation extends Parser{
             return ValidationResult.Error_LetterSymbolDetected;
         } else if (hasNotAllowedSpecialChar(line)) {
             return ValidationResult.Error_SpecialChar;
+        } else if (hasNotMinNumberChars(line)) {
+            return ValidationResult.Error_NoMinNumberChars;
+        } else if (hasNotOperationsChars(line)) {
+            return ValidationResult.Error_NoOperationsChars;
+        } else if (hasNotOperationsNext(line)) {
+            return ValidationResult.Error_StringStartWith;
         }
 
-        String pureLine = line;
+        //String line = line;
 
-        var tokens = tokenize(pureLine);
-        if(tokens.length != 3) {
-            return ValidationResult.Error_NoStringLength;
-        }
+        var tokens = tokenize(line);
+//        if(tokens.length != 3) {
+//            return ValidationResult.Error_NoStringLength;
+//        }
         var token1Type = ClassifyToken.classifyToken(tokens[0]);
         var token2Type = ClassifyToken.classifyToken(tokens[1]);
         var token3Type = ClassifyToken.classifyToken(tokens[2]);
