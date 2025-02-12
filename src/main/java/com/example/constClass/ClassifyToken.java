@@ -1,5 +1,7 @@
 package com.example.constClass;
 
+import static com.example.validation.Validation.isOperationSign;
+
 import com.example.enumClass.TokenType;
 import com.example.validation.Validation;
 
@@ -7,7 +9,7 @@ public interface ClassifyToken {
 
  static TokenType classifyToken(final String token)
     {
-        if(token.isEmpty()||Helper.ALPHABET_OF_LETTERS()||Helper.ALPHABET_OF_SPECIAL_CHARACTERS()) {
+        if(token.isEmpty()) {//||Helper.ALPHABET_OF_LETTERS()||Helper.ALPHABET_OF_SPECIAL_CHARACTERS()
             return TokenType.InvalidToken;
         }
 
@@ -15,7 +17,7 @@ public interface ClassifyToken {
         if(Character.isDigit(sym)) {
             return TokenType.Number;
         }
-        if(Validation.isOperationSign(sym)){
+        if(isOperationSign(sym)){
             return TokenType.OperationSign;}
         else{
             return TokenType.InvalidToken;}

@@ -1,31 +1,33 @@
 package com.example.validation;
 
+import static com.example.validation.Validation.isOperationSign;
+
 import java.util.ArrayList;
 
 public class Parser
 {
-      public String[] tokenize(final String org) {
+      public static String[] tokenize(final String org) {
         ArrayList<String> tokens = new ArrayList();
 
         String token = "";
         for (int i = 0; i < org.length(); i++) {
             char sym = org.charAt(i);
 
-//            if (Character.isSpaceChar(sym))
-//            {
-//                if(!token.isEmpty() )
-//                    tokens.add(token);
-//
-//                token = "";
-//                continue; // Ignores space
-//            }
+            if (Character.isSpaceChar(sym))
+            {
+                if(!token.isEmpty() )
+                    tokens.add(token);
+
+                token = "";
+                continue; // Ignores space
+            }
 
             if (Character.isDigit(sym)) {
                 token += sym;
                 continue;
             }
 
-            if (Validation.isOperationSign(sym))
+            if (isOperationSign(sym))
             {
                 if(!token.isEmpty())
                     tokens.add(token);
