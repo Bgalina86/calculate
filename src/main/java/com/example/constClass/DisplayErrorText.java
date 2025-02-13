@@ -2,8 +2,10 @@ package com.example.constClass;
 
 import com.example.enumClass.ValidationResult;
 
-public interface DisplayErrorText {
-    private static String displayErrorText(ValidationResult code) {
+public interface DisplayErrorText{
+
+
+    default String displayErrorText(ValidationResult code) {
         switch (code) {
             case OK:
                 return "Строка введена корректно согласно примеру";

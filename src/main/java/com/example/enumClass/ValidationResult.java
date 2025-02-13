@@ -1,6 +1,8 @@
 package com.example.enumClass;
 
-public enum ValidationResult {
+import com.example.constClass.DisplayErrorText;
+
+public enum ValidationResult implements DisplayErrorText {
     OK,
     Error_InvalidCharDetected,
     Error_UnexpectedTokenCount,
@@ -11,5 +13,10 @@ public enum ValidationResult {
     Error_NoOperationsChars,
     Error_OperationsCharsMin,
     Error_NoStringLength,
-    Error_StringStartWith
+    Error_StringStartWith;
+
+    @Override
+    public String displayErrorText(ValidationResult code) {
+        return DisplayErrorText.super.displayErrorText(code);
+    }
 }

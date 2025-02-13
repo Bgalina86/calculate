@@ -15,6 +15,7 @@ package com.example;
  * На самом деле в зависимости от способа реализации может покрывать как больше аспектов, так и меньше) Все зависит от выбранного способа решения.
  */
 
+import com.example.constClass.DisplayErrorText;
 import com.example.enumClass.ValidationResult;
 import com.example.validation.Validation;
 
@@ -35,18 +36,19 @@ class Calculate extends Validation {
     }
 
 
-    public void runTests()
-    {
+    public void runTests(){
+
         System.out.println("=== Running test suite ====\n");
 
-        assure( validateLine("123 + 345") == ValidationResult.OK, "Normal line" );
-        assure (validateLine("A123+334") == ValidationResult.Error_InvalidCharDetected, "Invalid character detection");
-        assure (validateLine("123 + ") == ValidationResult.Error_UnexpectedTokenCount, "Wrong token count detection");
-        assure( validateLine("123 1234  +") == ValidationResult.Error_InvalidGrammar, "Incorrect token seq. detection");
-        assure( validateLine("/123@1234 ") == ValidationResult.Error_InvalidGrammar, "Incorrect token seq. detection");
-        assure( validateLine("123/1234 ") == ValidationResult.OK, "Normal line");
-        assure( validateLine("123*1234 ") == ValidationResult.OK, "Normal line");
-        assure( validateLine("12c31234 ") == ValidationResult.Error_InvalidGrammar, "Incorrect token seq. detection");
+        assure( validateLine("123 + 345") == ValidationResult.OK, "1. Normal line - 123 + 345" );
+        assure (validateLine("A123+334") == ValidationResult.Error_InvalidCharDetected, "2. Invalid character detection - A123+334");
+        assure (validateLine("123 + ") == ValidationResult.Error_UnexpectedTokenCount, "3. Wrong token count detection - 123 + ");
+        assure( validateLine("123 1234  +") == ValidationResult.Error_InvalidGrammar, "4. Incorrect token seq. detection - 123 1234  +");
+        assure( validateLine("/123@1234 ") == ValidationResult.Error_InvalidGrammar, "5. Incorrect token seq. detection - /123@1234 ");
+        assure( validateLine("123/1234 ") == ValidationResult.OK, "6. Normal line - 123/1234 ");
+        assure( validateLine("123*1234 ") == ValidationResult.OK, "7. Normal line - 123*1234 ");
+        assure( validateLine("12c31234 ") == ValidationResult.Error_InvalidGrammar, "8. Incorrect token seq. detection - 12c31234 ");
+
         /*
         assure(true, "Always succeeded");
         assure( validAlphaTest(), "Check line having correct alphabet" );
