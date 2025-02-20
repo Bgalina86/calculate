@@ -5,6 +5,9 @@ import com.example.enumClass.ValidationResult;
 
 import static com.example.constClass.ClassifyToken.classifyToken;
 import static com.example.constClass.Helper.ALPHABET_OF_LETTERS;
+import static com.example.constClass.Helper.ALPHABET_OF_LETTERS1;
+import static com.example.constClass.Helper.ALPHABET_OF_LETTERS2;
+import static com.example.constClass.Helper.ALPHABET_OF_LETTERS3;
 import static com.example.constClass.Helper.ALPHABET_OF_MATH_OPERATIONS;
 import static com.example.constClass.Helper.ALPHABET_OF_MATH_OPERATIONS_AND_NUM;
 import static com.example.constClass.Helper.ALPHABET_OF_NUM;
@@ -30,16 +33,17 @@ public class Validation extends Parser{
         private boolean hasNotAllowedSymbolsLetter(String line){
             for (int i = 0; i < line.length(); i++) {
                 char sym = line.charAt(i);
-                if (ALPHABET_OF_LETTERS.indexOf(sym) == 0) {
-                    return true;
+                if (ALPHABET_OF_LETTERS.indexOf(sym) == 0 || ALPHABET_OF_LETTERS1.indexOf(sym) == 0 || ALPHABET_OF_LETTERS2.indexOf(sym) == 0 || ALPHABET_OF_LETTERS3.indexOf(sym) == 0) {
+                    return false;
                 }
             }
-            return false;
+            return true;
         }
+
         private boolean hasNotAllowedSpecialChar(String line){
             for (int i = 0; i < line.length(); i++) {
                 char sym = line.charAt(i);
-                if (ALPHABET_OF_SPECIAL_CHARACTERS.indexOf(sym) == 0) {
+                if (ALPHABET_OF_SPECIAL_CHARACTERS.indexOf(sym) == -1) {
                     return true;
                 }
             }
@@ -51,30 +55,43 @@ public class Validation extends Parser{
             for (int i = 0; i < line.length(); i++) {
                 char sym = line.charAt(i);
                 if (ALPHABET_OF_NUM.indexOf(sym) == 0) {
-                    numberChars++;}
-                if(numberChars < 2){
+                    numberChars++;}}
+                if(numberChars < 3){
                     return false;}
-            }
             return true;
         }
 
         int operationsChars = 0;
-        private boolean hasNotOperationsChars(String line){
+        private boolean hasMoreThenTwoOperationsChars(String line){
             for (int i = 0; i < line.length(); i++) {
                 char sym = line.charAt(i);
                 if (ALPHABET_OF_MATH_OPERATIONS.indexOf(sym) == 0) {
                     operationsChars++;
                 }
-                if ((operationsChars > 2) || (operationsChars == 0)) {
+            }
+                if (operationsChars > 2)  {
                     return false;
                 }
-            }
+
             return true;
         }
+int operationsCharsNull = 0;
+    private boolean hasNotOperationsChars(String line){
+        for (int i = 0; i < line.length(); i++) {
+            char sym = line.charAt(i);
+            if (ALPHABET_OF_MATH_OPERATIONS.indexOf(sym) == 0) {
+                operationsChars++;
+            }
+        }
+            if (operationsCharsNull == 0) {
+                return false;
+            }
+        return true;
+    }
 
         private boolean hasNotOperationsNext(String line){
             for (int i = 0; i < line.length(); i++) {
-                for (int j = 0; j < ALPHABET_OF_MATH_OPERATIONS.length(); j++) {
+                for (int j = 0; j < ALPHABET_OF_MATH_OPERATIONS.length(); j++){
                     String alphabetMathOperations = String.valueOf(
                         ALPHABET_OF_MATH_OPERATIONS.charAt(j));
                     if (line.startsWith(alphabetMathOperations)) {
@@ -94,10 +111,12 @@ public class Validation extends Parser{
 
     public ValidationResult validateLine(String line)
     {
-        if((!hasAllowedCharsOnly(line)) || hasNotAllowedSymbolsLetter(line))
-            return ValidationResult.Error_LetterSymbolDetected;
-        if(hasNotMinNumberChars(line) && (!hasNotAllowedSymbolsLetter(line))) return ValidationResult.Error_NoMinNumberChars;
-     // if(hasAllowedCharsOnly(line) || (!hasNotAllowedSymbolsLetter(line))) return ValidationResult.Error_NoOperationsChars;
+        //if (!hasAllowedCharsOnly(line)){return ValidationResult.Error_NoStringLength;}
+        if (!hasNotAllowedSymbolsLetter(line)) {return ValidationResult.Error_LetterSymbolDetected;}
+        if (!hasNotAllowedSpecialChar(line)) {return ValidationResult.Error_SpecialChar;}
+        if (hasNotOperationsChars(line)) {return ValidationResult.Error_NoOperationsChars;}
+        if (!hasNotOperationsNext(line)) {return ValidationResult.Error_StringStartWith;}
+        if(hasNotMinNumberChars(line)) {return ValidationResult.Error_NoStringLength;}
 //        if (!hasNotOperationsChars(line)) return ValidationResult.Error_NoOperationsChars;
         //if(!hasNotOperationsNext(line)) return ValidationResult;
 
