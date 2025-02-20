@@ -30,10 +30,13 @@ public class Validation extends Parser{
            return true;
         }
 
-        private boolean hasNotAllowedSymbolsLetter(String line){
+        private boolean hasSymbolsLetter(String line){
             for (int i = 0; i < line.length(); i++) {
                 char sym = line.charAt(i);
-                if (ALPHABET_OF_LETTERS.indexOf(sym) == 0 || ALPHABET_OF_LETTERS1.indexOf(sym) == 0 || ALPHABET_OF_LETTERS2.indexOf(sym) == 0 || ALPHABET_OF_LETTERS3.indexOf(sym) == 0) {
+                if (ALPHABET_OF_LETTERS.indexOf(sym) >= 0 ||
+                    ALPHABET_OF_LETTERS1.indexOf(sym) >= 0 ||
+                    ALPHABET_OF_LETTERS2.indexOf(sym) >= 0 ||
+                    ALPHABET_OF_LETTERS3.indexOf(sym) >= 0) {
                     return false;
                 }
             }
@@ -65,7 +68,7 @@ public class Validation extends Parser{
         private boolean hasMoreThenTwoOperationsChars(String line){
             for (int i = 0; i < line.length(); i++) {
                 char sym = line.charAt(i);
-                if (ALPHABET_OF_MATH_OPERATIONS.indexOf(sym) == 0) {
+                if (ALPHABET_OF_MATH_OPERATIONS.indexOf(sym) >= 0) {
                     operationsChars++;
                 }
             }
@@ -79,7 +82,7 @@ int operationsCharsNull = 0;
     private boolean hasNotOperationsChars(String line){
         for (int i = 0; i < line.length(); i++) {
             char sym = line.charAt(i);
-            if (ALPHABET_OF_MATH_OPERATIONS.indexOf(sym) == 0) {
+            if (ALPHABET_OF_MATH_OPERATIONS.indexOf(sym) >= 0) {
                 operationsChars++;
             }
         }
@@ -112,7 +115,7 @@ int operationsCharsNull = 0;
     public ValidationResult validateLine(String line)
     {
         //if (!hasAllowedCharsOnly(line)){return ValidationResult.Error_NoStringLength;}
-        if (!hasNotAllowedSymbolsLetter(line)) {return ValidationResult.Error_LetterSymbolDetected;}
+        if (!hasSymbolsLetter(line)) {return ValidationResult.Error_LetterSymbolDetected;}
         if (!hasNotAllowedSpecialChar(line)) {return ValidationResult.Error_SpecialChar;}
         if (hasNotOperationsChars(line)) {return ValidationResult.Error_NoOperationsChars;}
         if (!hasNotOperationsNext(line)) {return ValidationResult.Error_StringStartWith;}

@@ -11,7 +11,7 @@ public class Arithmetic extends Validation {
 
         Arithmetic arith = new Arithmetic();
        System.out.println("123+334" + ": "+ arith.validateVerbose("123+334"));
-       System.out.println("12F3+334" + ": "+  arith.validateVerbose("12ч3+334"));
+       System.out.println("12F3+334" + ": "+  arith.validateVerbose("A123+334"));
        System.out.println("1"
            + " + " + ": "+  arith.validateVerbose("123 + "));
        System.out.println("123 1234  +" + ": "+  arith.validateVerbose("123 1234  +"));
