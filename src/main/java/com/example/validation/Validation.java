@@ -63,10 +63,8 @@ public class Validation extends Parser {
             }
         }
         if (numberChars < 2) {
-            //  System.out.println("1 Кол-во символов: " + numberChars);
-            return false;
+                      return false;
         }
-        //System.out.println("2 Кол-во символов: " + numberChars);
         return true;
     }
 
@@ -134,7 +132,7 @@ public class Validation extends Parser {
             return ValidationResult.Error_StringStartWith;
         }//
         if (!hasMinNumberChars(line)) {
-            return ValidationResult.Error_NoStringLength;
+            return ValidationResult.Error_NoMinNumberChars;
         }
 //        if (!hasOperationsChars(line)) return ValidationResult.Error_NoOperationsChars;
         //if(!hasOperationsNext(line)) return ValidationResult;
