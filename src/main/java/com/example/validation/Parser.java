@@ -4,6 +4,9 @@ import static com.example.validation.Validation.isOperationSign;
 
 import java.util.ArrayList;
 
+/**
+ * Разбираем на лексемы
+ */
 public class Parser
 {
       public static String[] tokenize(final String org) {

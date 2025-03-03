@@ -30,6 +30,11 @@ public class Validation extends Parser {
         return true;
     }
 
+    /**
+     * Проверка на наличие символов - букв в строке
+     * @param line входящая строка для проверки
+     * @return
+     */
     private boolean hasSymbolsLetter(String line) {
         for (int i = 0; i < line.length(); i++) {
             char sym = line.charAt(i);
@@ -43,61 +48,55 @@ public class Validation extends Parser {
         return true;
     }
 
+    /**
+     * Проверка на наличие спецсимволов в строке
+     *
+     * @param line входящая строка для проверки
+     * @return
+     */
     private boolean hasNotAllowedSpecialChar(String line) {
-        for (int i = 0; i < line.length(); i++) {
-            char sym = line.charAt(i);
-            if (ALPHABET_OF_SPECIAL_CHARACTERS.indexOf(sym) == -1) {
+        for (int i = 0; i < ALPHABET_OF_SPECIAL_CHARACTERS.length(); i++) {
+            if (line.indexOf(ALPHABET_OF_SPECIAL_CHARACTERS.charAt(i)) != -1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Проверка количества знаков в строке
+     *
+     * @param line входящая строка для проверки
+     * @return
+     */
+    private boolean hasMinNumberChars(String line) {
+        if (line.length() < 3) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Проверка на наличие знака операции в строке
+     *
+     * @param line входящая строка для проверки
+     * @return
+     */
+    private boolean hasOperationsChars(String line) {
+        for (int i = 0; i < ALPHABET_OF_MATH_OPERATIONS.length(); i++) {
+            if (line.indexOf(ALPHABET_OF_MATH_OPERATIONS.charAt(i)) != -1) {
                 return true;
             }
         }
         return false;
     }
 
-    int numberChars = 0;
-
-    private boolean hasMinNumberChars(String line) {
-        for (int i = 0; i < line.length(); i++) {
-            char sym = line.charAt(i);
-            if (ALPHABET_OF_NUM.indexOf(sym) >= 0) {
-                numberChars++;
-            }
-        }
-        if (numberChars < 2) {
-                      return false;
-        }
-        return true;
-    }
-
-    int operationsChars = 0;
-
-    private boolean hasMoreThenTwoOperationsChars(String line) {
-        for (int i = 0; i < line.length(); i++) {
-            char sym = line.charAt(i);
-            if (ALPHABET_OF_MATH_OPERATIONS.indexOf(sym) >= 0) {
-                operationsChars++;
-            }
-        }
-        if (operationsChars > 2) {
-            return false;
-        }
-        return true;
-    }
-
-    int operationsCharsNull = 0;
-
-    private boolean hasOperationsChars(String line) {
-        for (int i = 0; i < line.length(); i++) {
-            char sym = line.charAt(i);
-            if (ALPHABET_OF_MATH_OPERATIONS.indexOf(sym) >= 0) {
-                operationsCharsNull++;
-            }
-        }
-        if (operationsCharsNull == 0) {
-            return false;
-        }
-        return true;
-    }
-
+    /**
+     * Проверяем что строка не начинается на знак операции
+     * @param line входящая строка для проверки
+     * @return
+     */
     private boolean hasOperationsNext(String line) {
         for (int i = 0; i < line.length(); i++) {
             for (int j = 0; j < ALPHABET_OF_MATH_OPERATIONS.length(); j++) {
@@ -111,17 +110,25 @@ public class Validation extends Parser {
         return true;
     }
 
+    /**
+     * Детализируем вывод сообщения на основании проверок
+     * @param line входящая строка для проверки
+     * @return
+     */
     public String validateVerbose(final String line) {
-        ValidationResult vr = this.validateLine(line);
+        ValidationResult vr = validateLine(line);
         return vr.getErrorText();
     }
 
-
+    /**
+     * Основной класс проверки валидности вводимой строки 
+     * @param line входящая строка для проверки
+     * @return
+     */
     public ValidationResult validateLine(String line) {
-        //if (!hasAllowedCharsOnly(line)){return ValidationResult.Error_NoStringLength;}
         if (!hasSymbolsLetter(line)) {
             return ValidationResult.Error_LetterSymbolDetected;
-        }//
+        }
         if (!hasNotAllowedSpecialChar(line)) {
             return ValidationResult.Error_SpecialChar;
         }
@@ -130,23 +137,25 @@ public class Validation extends Parser {
         }
         if (!hasOperationsNext(line)) {
             return ValidationResult.Error_StringStartWith;
-        }//
+        }
         if (!hasMinNumberChars(line)) {
             return ValidationResult.Error_NoMinNumberChars;
         }
-//        if (!hasOperationsChars(line)) return ValidationResult.Error_NoOperationsChars;
-        //if(!hasOperationsNext(line)) return ValidationResult;
-
-        String pureLine = line;
-
-        var tokens = tokenize(pureLine);
-        if (tokens.length != 3) {
-            return ValidationResult.Error_NoStringLength;
+        if (!hasOperationsChars(line)) {
+            return ValidationResult.Error_NoOperationsChars;
         }
 
-        var token1Type = classifyToken(tokens[0]);
-        var token2Type = classifyToken(tokens[1]);
-        var token3Type = classifyToken(tokens[2]);
+        /**
+         * Разбираем лексемы на составные части.
+         * Числовые и знак операции.
+         * Проверяем валидность такого разделения
+         */
+        String pureLine = line;
+
+        String[] tokens = tokenize(pureLine);
+        TokenType token1Type = classifyToken(tokens[0]);
+        TokenType token2Type = classifyToken(tokens[1]);
+        TokenType token3Type = classifyToken(tokens[2]);
 
         if (token1Type == TokenType.Number && token2Type == TokenType.OperationSign
             && token3Type == TokenType.Number) {
@@ -155,5 +164,4 @@ public class Validation extends Parser {
             return ValidationResult.Error_InvalidGrammar;
         }
     }
-
 }

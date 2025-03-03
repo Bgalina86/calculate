@@ -9,7 +9,7 @@ public interface ClassifyToken {
 
  static TokenType classifyToken(final String token)
     {
-        if(token.isEmpty()) {//||Helper.ALPHABET_OF_LETTERS()||Helper.ALPHABET_OF_SPECIAL_CHARACTERS()
+        if(token.isEmpty()) {
             return TokenType.InvalidToken;
         }
 
