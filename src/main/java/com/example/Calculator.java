@@ -8,7 +8,7 @@ import java.util.InputMismatchException;
 
 public class Calculator {
 
-    public static String calculate(int number1, int number2, int operation) {
+    public String calculate(int number1, int number2, int operation) {
         Operation o = chooseOperation(operation);
         return o.calculate(
                 numberToBigDecimal(number1),
@@ -18,7 +18,7 @@ public class Calculator {
                 .toPlainString();
     }
 
-    public static String calculate(double number1, double number2, int operation) {
+    public String calculate(double number1, double number2, int operation) {
         Operation o = chooseOperation(operation);
         return o.calculate(
                 numberToBigDecimal(number1),
