@@ -7,4 +7,9 @@ public class Addition implements Operation {
     public BigDecimal calculate(BigDecimal number1, BigDecimal number2) {
         return number1.add(number2);
     }
+
+    @Override
+    public void calculate() {
+
+    }
 }

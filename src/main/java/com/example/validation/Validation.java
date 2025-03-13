@@ -115,7 +115,7 @@ public class Validation extends Parser {
      * @param line входящая строка для проверки
      * @return
      */
-    public String validateVerbose(final String line) {
+    public  String validateVerbose(final String line) {
         ValidationResult vr = validateLine(line);
         return vr.getErrorText();
     }
@@ -125,7 +125,7 @@ public class Validation extends Parser {
      * @param line входящая строка для проверки
      * @return
      */
-    public ValidationResult validateLine(String line) {
+    public  ValidationResult validateLine(String line) {
         if (!hasSymbolsLetter(line)) {
             return ValidationResult.Error_LetterSymbolDetected;
         }

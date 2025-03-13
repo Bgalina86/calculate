@@ -7,4 +7,9 @@ public class Division implements Operation {
     public BigDecimal calculate(BigDecimal number1, BigDecimal number2) {
         return number1.divide(number2);
     }
+
+    @Override
+    public void calculate() {
+
+    }
 }
