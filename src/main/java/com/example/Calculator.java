@@ -8,27 +8,17 @@ import java.util.InputMismatchException;
 
 public class Calculator {
 
-    public String calculate(int number1, int number2, int operation) {
-        Operation o = chooseOperation(operation);
+    public String calculate(double number1, double number2, double operation) {
+        Operation o = chooseOperation((int) operation);
         return o.calculate(
                 numberToBigDecimal(number1),
                 numberToBigDecimal(number2)
-        )
-                .stripTrailingZeros()
-                .toPlainString();
+            )
+            .stripTrailingZeros()
+            .toPlainString();
     }
 
-    public String calculate(double number1, double number2, int operation) {
-        Operation o = chooseOperation(operation);
-        return o.calculate(
-                numberToBigDecimal(number1),
-                numberToBigDecimal(number2)
-        )
-                .stripTrailingZeros()
-                .toPlainString();
-    }
-
-    public int getOperation(String opSign){
+     public double getOperation(String opSign) {
         Operations operations = new Operations();
         char op = opSign.charAt(0);
         switch (op) {
@@ -43,8 +33,9 @@ public class Calculator {
 
             default:
                 throw new RuntimeException("Некорректный формат введённых данных.");
+        }
     }
-    }
+
     private static Operation chooseOperation(int operation) {
         switch (operation) {
             case Operations.ADDITION:
@@ -62,9 +53,5 @@ public class Calculator {
 
     private static BigDecimal numberToBigDecimal(double n) {
         return new BigDecimal(Double.toString(n));
-    }
-
-    private static BigDecimal numberToBigDecimal(int n) {
-        return new BigDecimal(Integer.toString(n));
     }
 }

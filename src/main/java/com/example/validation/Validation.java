@@ -19,19 +19,9 @@ public class Validation extends Parser {
         return sym == '+' || sym == '-' || sym == '/' || sym == '*';
     }
 
-    //проверяем наличие знака математической операции и цифр
-    private boolean hasAllowedCharsOnly(String line) {
-        for (int i = 0; i < line.length(); i++) {
-            char sym = line.charAt(i);
-            if (ALPHABET_OF_MATH_OPERATIONS_AND_NUM.indexOf(sym) == -1) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     /**
      * Проверка на наличие символов - букв в строке
+     *
      * @param line входящая строка для проверки
      * @return
      */
@@ -94,6 +84,7 @@ public class Validation extends Parser {
 
     /**
      * Проверяем что строка не начинается на знак операции
+     *
      * @param line входящая строка для проверки
      * @return
      */
@@ -112,20 +103,22 @@ public class Validation extends Parser {
 
     /**
      * Детализируем вывод сообщения на основании проверок
+     *
      * @param line входящая строка для проверки
      * @return
      */
-    public  String validateVerbose(final String line) {
+    public String validateVerbose(final String line) {
         ValidationResult vr = validateLine(line);
         return vr.getErrorText();
     }
 
     /**
-     * Основной класс проверки валидности вводимой строки 
+     * Основной класс проверки валидности вводимой строки
+     *
      * @param line входящая строка для проверки
      * @return
      */
-    public  ValidationResult validateLine(String line) {
+    public ValidationResult validateLine(String line) {
         if (!hasSymbolsLetter(line)) {
             return ValidationResult.Error_LetterSymbolDetected;
         }
