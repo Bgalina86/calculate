@@ -28,6 +28,23 @@ public class Calculator {
                 .toPlainString();
     }
 
+    public int getOperation(String opSign){
+        Operations operations = new Operations();
+        char op = opSign.charAt(0);
+        switch (op) {
+            case '+':
+                return operations.ADDITION;
+            case '*':
+                return operations.MULTIPLICATION;
+            case '/':
+                return operations.DIVISION;
+            case '-':
+                return operations.SUBTRACTION;
+
+            default:
+                throw new RuntimeException("Некорректный формат введённых данных.");
+    }
+    }
     private static Operation chooseOperation(int operation) {
         switch (operation) {
             case Operations.ADDITION:
